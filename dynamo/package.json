@@ -1,0 +1,11 @@
+{
+  "name": "twt-dynamo",
+  "description": "The World Table backend implemented on firebase cloud functions",
+  "version": "0.0.1",
+  "dependencies": {
+    "firebase": "^3.7.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "printf": "^0.2.5"
+  }
+}

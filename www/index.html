@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="//code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  <script src="//www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCJl7MdwldXBVaQRHk0AUfntN4b2lkbHvs",
+      authDomain: "twt-research-ms.firebaseapp.com",
+      databaseURL: "https://twt-research-ms.firebaseio.com",
+      storageBucket: "twt-research-ms.appspot.com",
+      messagingSenderId: "598301322069"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <style>
+    #security-area {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+    }
+    body.is-signed-in .not-signed-in { display: none; }
+    body.is-not-signed-in .signed-in { display: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="security-area" class="signed-in"><span id="username"></span> <a class="signout-button" href="#">sign out</a></div>
+
+  <h2>Welcome to My Awesome App</h2>
+
+  <h1 id="bigOne"></h1>
+
+  <div id="error-messages" class="alert alert-error hidden"></div>
+
+  <div class="not-signed-in">
+    <button id='go-sign-in' type="button" class="btn btn-primary">Login</button>
+  </div>
+  <div class="signed-in">
+    Cool.
+  </div>
+</div>
+
+<div id="firebaseui-auth-container"></div>
+
+<script>
+  function forceSignin(evt) {
+    evt && evt.preventDefault && evt.preventDefault();
+    document.location.href = '/auth.html';
+    return false;
+  }
+
+  function signout(evt) {
+    evt && evt.preventDefault && evt.preventDefault();
+    firebase.auth().signOut();
+    return false;
+  }
+
+  $('#go-sign-in').on('click', forceSignin);
+  $('.signout-button').on('click', signout);
+
+  var auth = firebase.auth().onAuthStateChanged(function (firebaseUser) {
+    if (firebaseUser) {
+      $(document.body).addClass('is-signed-in').removeClass('is-not-signed-in');
+    } else {
+      $(document.body).removeClass('is-signed-in').addClass('is-not-signed-in');
+    }
+  });
+</script>
+</body>
+</html>
